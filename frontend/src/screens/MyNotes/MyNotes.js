@@ -1,17 +1,18 @@
 import React, { useEffect } from "react";
 import { Accordion, Badge, Button, Card } from "react-bootstrap";
 import MainScreen from "../../components/MainScreen";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 
 import { useDispatch, useSelector } from "react-redux";
 import { deleteNoteAction, listNotes } from "../../actions/notesActions";
 import Loading from "../../components/Loading";
 import ErrorMessage from "../../components/ErrorMessage";
+import { useNavigate } from "react-router-dom";
 
-function MyNotes({ history, search }) {
+function MyNotes({ search }) {
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const noteList = useSelector((state) => state.noteList);
   const { loading, error, notes } = noteList;
 
@@ -38,16 +39,9 @@ function MyNotes({ history, search }) {
   useEffect(() => {
     dispatch(listNotes());
     if (!userInfo) {
-      history.push("/");
+      navigate("/");
     }
-  }, [
-    dispatch,
-    history,
-    userInfo,
-    successDelete,
-    successCreate,
-    successUpdate,
-  ]);
+  }, [dispatch, userInfo, successDelete, successCreate, successUpdate]);
 
   const deleteHandler = (id) => {
     if (window.confirm("Are you sure?")) {
@@ -67,13 +61,12 @@ function MyNotes({ history, search }) {
       {errorDelete && (
         <ErrorMessage variant="danger">{errorDelete}</ErrorMessage>
       )}
+      {console.log(notes)}
       {loading && <Loading />}
       {loadingDelete && <Loading />}
       {notes &&
         notes
-          .filter((filteredNote) =>
-            filteredNote.title.toLowerCase().includes(search.toLowerCase())
-          )
+          .filter((filteredNote) => filteredNote.title.toLowerCase())
           .reverse()
           .map((note) => (
             <Accordion>
@@ -90,13 +83,10 @@ function MyNotes({ history, search }) {
                       fontSize: 18,
                     }}
                   >
-                    <Accordion.Toggle
-                      as={Card.Text}
-                      variant="link"
-                      eventKey="0"
-                    >
-                      {note.title}
-                    </Accordion.Toggle>
+                    <Accordion.Item eventKey="0">
+                      <Accordion.Header>{note.title}</Accordion.Header>
+                      <Accordion.Body></Accordion.Body>
+                    </Accordion.Item>
                   </span>
 
                   <div>

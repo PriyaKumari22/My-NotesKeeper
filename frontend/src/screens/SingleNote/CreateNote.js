@@ -6,13 +6,15 @@ import { createNoteAction } from "../../actions/notesActions";
 import Loading from "../../components/Loading";
 import ErrorMessage from "../../components/ErrorMessage";
 import ReactMarkdown from "react-markdown";
+import { useNavigate } from "react-router-dom";
 
-function CreateNote({ history }) {
+function CreateNote({}) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [category, setCategory] = useState("");
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const noteCreate = useSelector((state) => state.noteCreate);
   const { loading, error, note } = noteCreate;
@@ -31,7 +33,7 @@ function CreateNote({ history }) {
     if (!title || !content || !category) return;
 
     resetHandler();
-    history.push("/mynotes");
+    navigate("/mynotes");
   };
 
   useEffect(() => {}, []);

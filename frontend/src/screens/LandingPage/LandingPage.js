@@ -1,18 +1,31 @@
 import React, { useEffect } from "react";
 import { Button, Container, Row } from "react-bootstrap";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import "./LandingStyles.css";
+import { useNavigate } from "react-router-dom";
 
-function LandingPage({ history }) {
+// function LandingPage({ history }) {
+//   const userLogin = useSelector((state) => state.userLogin);
+//   const { userInfo } = userLogin;
+
+//   useEffect(() => {
+//     if (userInfo) {
+//       history.push("/mynotes");
+//     }
+//   }, [history, userInfo]);
+
+function LandingPage() {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (userInfo) {
-      history.push("/mynotes");
+      navigate("/mynotes");
     }
-  }, [history, userInfo]);
+  }, [userInfo]);
 
   return (
     <div className="main">

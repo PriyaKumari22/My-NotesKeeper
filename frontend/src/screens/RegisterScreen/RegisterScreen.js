@@ -7,64 +7,68 @@ import ErrorMessage from "../../components/ErrorMessage";
 import { register } from "../../actions/userActions";
 import MainScreen from "../../components/MainScreen";
 import "./RegisterScreen.css";
+import { useNavigate } from "react-router-dom";
 
-function RegisterScreen({ history }) {
+// const navigate = useNavigate();
+
+function RegisterScreen() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
-  const [pic, setPic] = useState(
-    "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
-  );
+  // const [pic, setPic] = useState(
+  //   "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
+  // );
   const [password, setPassword] = useState("");
   const [confirmpassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState(null);
-  const [picMessage, setPicMessage] = useState(null);
+  // const [picMessage, setPicMessage] = useState(null);
 
   const dispatch = useDispatch();
 
   const userRegister = useSelector((state) => state.userRegister);
   const { loading, error, userInfo } = userRegister;
 
-  const postDetails = (pics) => {
-    if (
-      pics ===
-      "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
-    ) {
-      return setPicMessage("Please Select an Image");
-    }
-    setPicMessage(null);
-    if (pics.type === "image/jpeg" || pics.type === "image/png") {
-      const data = new FormData();
-      data.append("file", pics);
-      data.append("upload_preset", "notezipper");
-      data.append("cloud_name", "piyushproj");
-      fetch("https://api.cloudinary.com/v1_1/piyushproj/image/upload", {
-        method: "post",
-        body: data,
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          setPic(data.url.toString());
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    } else {
-      return setPicMessage("Please Select an Image");
-    }
-  };
+  // const postDetails = (pics) => {
+  //   if (
+  //     pics ===
+  //     "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
+  //   ) {
+  //     return setPicMessage("Please Select an Image");
+  //   }
+  //   setPicMessage(null);
+  //   if (pics.type === "image/jpeg" || pics.type === "image/png") {
+  //     const data = new FormData();
+  //     data.append("file", pics);
+  //     data.append("upload_preset", "notezipper");
+  //     data.append("cloud_name", "piyushproj");
+  //     fetch("https://api.cloudinary.com/v1_1/piyushproj/image/upload", {
+  //       method: "post",
+  //       body: data,
+  //     })
+  //       .then((res) => res.json())
+  //       .then((data) => {
+  //         setPic(data.url.toString());
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //       });
+  //   } else {
+  //     return setPicMessage("Please Select an Image");
+  //   }
+  // };
 
   useEffect(() => {
     if (userInfo) {
-      history.push("/");
+      navigate("/");
     }
-  }, [history, userInfo]);
+  }, [userInfo]);
 
   const submitHandler = (e) => {
     e.preventDefault();
 
     if (password !== confirmpassword) {
       setMessage("Passwords do not match");
-    } else dispatch(register(name, email, password, pic));
+    } else dispatch(register(name, email, password));
   };
 
   return (
@@ -114,7 +118,7 @@ function RegisterScreen({ history }) {
             />
           </Form.Group>
 
-          {picMessage && (
+          {/* {picMessage && (
             <ErrorMessage variant="danger">{picMessage}</ErrorMessage>
           )}
           <Form.Group controlId="pic">
@@ -126,7 +130,7 @@ function RegisterScreen({ history }) {
               label="Upload Profile Picture"
               custom
             />
-          </Form.Group>
+          </Form.Group> */}
 
           <Button variant="primary" type="submit">
             Register
