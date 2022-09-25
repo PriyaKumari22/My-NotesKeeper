@@ -5,16 +5,6 @@ import { Link, Navigate } from "react-router-dom";
 import "./LandingStyles.css";
 import { useNavigate } from "react-router-dom";
 
-// function LandingPage({ history }) {
-//   const userLogin = useSelector((state) => state.userLogin);
-//   const { userInfo } = userLogin;
-
-//   useEffect(() => {
-//     if (userInfo) {
-//       history.push("/mynotes");
-//     }
-//   }, [history, userInfo]);
-
 function LandingPage() {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -33,8 +23,7 @@ function LandingPage() {
         <Row>
           <div className="intro-text">
             <div>
-              <h1 className="title">Welcome to Note Zipper</h1>
-              <p className="subtitle">One Safe place for all your notes.</p>
+              <h1 className="title">Welcome to My Notes-App</h1>
             </div>
             <div className="buttonContainer">
               <Link to="/login">

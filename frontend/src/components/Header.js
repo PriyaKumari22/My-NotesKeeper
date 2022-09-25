@@ -24,9 +24,9 @@ function Header({ setSearch }) {
   useEffect(() => {}, [userInfo]);
 
   return (
-    <Navbar collapseOnSelect expand="lg" bg="primary" variant="dark">
+    <Navbar collapseOnSelect expand="lg" bg="success" variant="light">
       <Container>
-        <Navbar.Brand href="/">Note Zipper</Navbar.Brand>
+        <Navbar.Brand href="/">My Notes-App</Navbar.Brand>
 
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
